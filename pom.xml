@@ -14,7 +14,22 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mssc-beer-service</name>
 	<description>MSSC Beer Service</description>
-
+	<developers>
+		<developer>
+			<name>Faiz Kidwai</name>
+			<email>f.y.kidwai@gmail.com</email>
+		</developer>
+	</developers>
+	<url>https://github.com/fykidwai/mssc-beer-service</url>
+	<scm>
+		<url>https://github.com/fykidwai/mssc-beer-service</url>
+		<connection>scm:git:git://github.com/fykidwai/mssc-beer-service.git</connection>
+		<developerConnection>scm:git:git@github.com:fykidwai/mssc-beer-service.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<url>https://github.com/fykidwai/mssc-beer-service/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
 	<properties>
 		<java.version>11</java.version>
 		<jaxb.version>2.3.0</jaxb.version>
@@ -97,4 +112,5 @@
 		</plugins>
 	</build>
 
+	
 </project>
