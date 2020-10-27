@@ -1,6 +1,8 @@
 package guru.springframework.msscbeerservice.services;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,10 @@ public class BeerServiceImpl implements BeerService {
 
     private final BeerRepository beerRepository;
     private final BeerMapper beerMapper;
+@Override
+    public List<BeerDto> getAllBeer() {
+        return beerRepository.findAll().stream().map(beerMapper::beerToBeerDto).collect(Collectors.toList());
+    }
 
     @Override
     public BeerDto getBeerById(final UUID beerId) {

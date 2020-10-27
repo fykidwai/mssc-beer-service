@@ -1,5 +1,6 @@
 package guru.springframework.msscbeerservice.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import guru.springframework.msscbeerservice.web.model.BeerDto;
@@ -11,5 +12,7 @@ public interface BeerService {
     BeerDto createNewBeer(BeerDto beerDto);
 
     BeerDto updateBeerById(UUID beerId, BeerDto beerDto);
+
+    List<BeerDto> getAllBeer();
 
 }

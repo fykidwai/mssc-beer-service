@@ -1,5 +1,6 @@
 package guru.springframework.msscbeerservice.web.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,11 @@ public class BeerController {
     @GetMapping("/{beerId}")
     public ResponseEntity<BeerDto> getBeerById(@PathVariable final UUID beerId) {
         return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BeerDto>> getAllBeer() {
+        return new ResponseEntity<>(beerService.getAllBeer(), HttpStatus.OK);
     }
 
     @PostMapping
