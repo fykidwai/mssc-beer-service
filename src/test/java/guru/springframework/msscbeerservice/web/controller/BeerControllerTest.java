@@ -30,6 +30,7 @@ class BeerControllerTest {
 
     private static final String SLASH = "/";
     private static final String API_V1_BEER = "/api/v1/beer";
+    private static final String API_V1_BEER_UPC = "/api/v1/beerUpc";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -64,6 +65,13 @@ class BeerControllerTest {
         mockMvc
             .perform(put(API_V1_BEER + SLASH + id.toString()).contentType(MediaType.APPLICATION_JSON).content(beerDtoString))
             .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void testGetBeerByUpc() throws Exception {
+        given(beerService.getBeerByUPC(BeerLoader.BEER_1_UPC)).willReturn(getValidBeerDto());
+        mockMvc.perform(get(API_V1_BEER_UPC + SLASH + BeerLoader.BEER_1_UPC).accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk());
     }
 
     private BeerDto getValidBeerDto() {

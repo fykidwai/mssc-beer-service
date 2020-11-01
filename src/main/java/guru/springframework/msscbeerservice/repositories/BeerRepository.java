@@ -1,6 +1,7 @@
 package guru.springframework.msscbeerservice.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
@@ -21,4 +22,5 @@ public interface BeerRepository extends PagingAndSortingRepository<Beer, UUID> {
 
     Page<Beer> findAllByBeerStyle(BeerStyleEnum beerStyle, Pageable pageable);
 
+    Optional<Beer> findByUpc(String upc);
 }
