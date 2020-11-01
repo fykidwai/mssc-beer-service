@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -32,13 +33,13 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
+    @Cacheable(cacheNames = "beerListCache", key = "beerId", condition = "#showInventoryOnHand == false")
     public BeerDto getBeerById(final UUID beerId, final boolean showInventoryOnHand) {
         if (showInventoryOnHand) {
-
-            return beerMapper.beerToBeerDtoWithInventory(beerRepository.findById(beerId).orElseThrow(NotFoundException::new));
+            return beerMapper
+                .beerToBeerDtoWithInventory(beerRepository.findById(beerId).orElseThrow(NotFoundException::new));
         }
-        return beerMapper
-            .beerToBeerDto(beerRepository.findById(beerId).orElseThrow(NotFoundException::new));
+        return beerMapper.beerToBeerDto(beerRepository.findById(beerId).orElseThrow(NotFoundException::new));
     }
 
     @Override
@@ -50,7 +51,7 @@ public class BeerServiceImpl implements BeerService {
     public BeerDto updateBeerById(final UUID beerId, final BeerDto beerDto) {
         Beer beer = beerRepository.findById(beerId).orElseThrow(NotFoundException::new);
         beer.setBeerName(beerDto.getBeerName());
-        beer.setBeerStyle(beerDto.getBeerStyle().name());
+        beer.setBeerStyle(beerDto.getBeerStyle());
         beer.setPrice(beerDto.getPrice());
         beer.setUpc(beerDto.getUpc());
 
@@ -58,6 +59,7 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
+    @Cacheable(cacheNames = "beerCache", condition = "#showInventoryOnHand==false")
     public BeerPagedList listBeers(final String beerName, final BeerStyleEnum beerStyle, final PageRequest pageRequest,
         final boolean showInventoryOnHand) {
         final Page<Beer> beerPage;
@@ -71,7 +73,7 @@ public class BeerServiceImpl implements BeerService {
         } else {
             beerPage = beerRepository.findAll(pageRequest);
         }
- 
+
         final Stream<BeerDto> bearDtoStream;
         if (showInventoryOnHand) {
             bearDtoStream = beerPage.getContent().stream().map(beerMapper::beerToBeerDtoWithInventory);

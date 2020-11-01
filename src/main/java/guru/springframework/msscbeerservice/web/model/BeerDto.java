@@ -1,5 +1,6 @@
 package guru.springframework.msscbeerservice.web.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -20,8 +21,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class BeerDto {
+public class BeerDto implements Serializable {
 
+    private static final long serialVersionUID = 3545736275716912663L;
+    
     @Null
     private UUID id;
     @Null

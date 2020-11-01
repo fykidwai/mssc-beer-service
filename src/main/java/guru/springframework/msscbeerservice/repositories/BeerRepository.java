@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import guru.springframework.msscbeerservice.domain.Beer;
@@ -15,9 +15,10 @@ public interface BeerRepository extends PagingAndSortingRepository<Beer, UUID> {
     @Override
     List<Beer> findAll();
 
-    Page<Beer> findAllByBeerNameAndBeerStyle(String beerName, BeerStyleEnum beerStyle, PageRequest pageRequest);
+    Page<Beer> findAllByBeerNameAndBeerStyle(String beerName, BeerStyleEnum beerStyle, Pageable pageable);
 
-    Page<Beer> findAllByBeerName(String beerName, PageRequest pageRequest);
+    Page<Beer> findAllByBeerName(String beerName, Pageable pageable);
 
-    Page<Beer> findAllByBeerStyle(BeerStyleEnum beerStyle, PageRequest pageRequest);
+    Page<Beer> findAllByBeerStyle(BeerStyleEnum beerStyle, Pageable pageable);
+
 }

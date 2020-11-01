@@ -1,6 +1,6 @@
 server:
   port: 9090
-spring:  datasource:    initialization-mode: embedded
+spring:  datasource:    initialization-mode: embedded  cache:    jcache:      config: classpath:ehcache.xml
 sfg: 
   brewery: 
     beer-inventory-service-host: http://localhost:9092
