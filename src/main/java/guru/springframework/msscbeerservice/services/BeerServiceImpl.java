@@ -3,6 +3,7 @@ package guru.springframework.msscbeerservice.services;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
@@ -27,17 +28,22 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public List<BeerDto> getAllBeer() {
-        return beerRepository.findAll().stream().map(beerMapper::beerToBeerDto).collect(Collectors.toList());
+        return beerRepository.findAll().stream().map(beerMapper::beerToBeerDtoWithInventory).collect(Collectors.toList());
     }
 
     @Override
-    public BeerDto getBeerById(final UUID beerId) {
-        return beerMapper.beerToBeerDto(beerRepository.findById(beerId).orElseThrow(NotFoundException::new));
+    public BeerDto getBeerById(final UUID beerId, final boolean showInventoryOnHand) {
+        if (showInventoryOnHand) {
+
+            return beerMapper.beerToBeerDtoWithInventory(beerRepository.findById(beerId).orElseThrow(NotFoundException::new));
+        }
+        return beerMapper
+            .beerToBeerDto(beerRepository.findById(beerId).orElseThrow(NotFoundException::new));
     }
 
     @Override
     public BeerDto createNewBeer(final BeerDto beerDto) {
-        return beerMapper.beerToBeerDto(beerRepository.save(beerMapper.beerDtoToBeer(beerDto)));
+        return beerMapper.beerToBeerDtoWithInventory(beerRepository.save(beerMapper.beerDtoToBeer(beerDto)));
     }
 
     @Override
@@ -48,11 +54,12 @@ public class BeerServiceImpl implements BeerService {
         beer.setPrice(beerDto.getPrice());
         beer.setUpc(beerDto.getUpc());
 
-        return beerMapper.beerToBeerDto(beerRepository.save(beer));
+        return beerMapper.beerToBeerDtoWithInventory(beerRepository.save(beer));
     }
 
     @Override
-    public BeerPagedList listBeers(final String beerName, final BeerStyleEnum beerStyle, final PageRequest pageRequest) {
+    public BeerPagedList listBeers(final String beerName, final BeerStyleEnum beerStyle, final PageRequest pageRequest,
+        final boolean showInventoryOnHand) {
         final Page<Beer> beerPage;
 
         if (StringUtils.isNotBlank(beerName) && beerStyle != null) {
@@ -64,8 +71,14 @@ public class BeerServiceImpl implements BeerService {
         } else {
             beerPage = beerRepository.findAll(pageRequest);
         }
-
-        return new BeerPagedList(beerPage.getContent().stream().map(beerMapper::beerToBeerDto).collect(Collectors.toList()),
+ 
+        final Stream<BeerDto> bearDtoStream;
+        if (showInventoryOnHand) {
+            bearDtoStream = beerPage.getContent().stream().map(beerMapper::beerToBeerDtoWithInventory);
+        } else {
+            bearDtoStream = beerPage.getContent().stream().map(beerMapper::beerToBeerDto);
+        }
+        return new BeerPagedList(bearDtoStream.collect(Collectors.toList()),
             PageRequest.of(beerPage.getPageable().getPageNumber(), beerPage.getPageable().getPageSize()),
             beerPage.getTotalElements());
     }

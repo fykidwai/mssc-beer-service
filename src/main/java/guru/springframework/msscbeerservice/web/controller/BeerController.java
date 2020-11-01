@@ -33,14 +33,16 @@ public class BeerController {
     private final BeerService beerService;
 
     @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDto> getBeerById(@PathVariable final UUID beerId) {
-        return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
+    public ResponseEntity<BeerDto> getBeerById(@PathVariable final UUID beerId,
+        @RequestParam(defaultValue = "false") final Boolean showInventoryOnHand) {
+        return new ResponseEntity<>(beerService.getBeerById(beerId, showInventoryOnHand), HttpStatus.OK);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BeerPagedList> listBeers(@RequestParam(required = false) Integer pageNumber,
         @RequestParam(required = false) Integer pageSize, @RequestParam(required = false) final String beerName,
-        @RequestParam(required = false) final BeerStyleEnum beerStyle) {
+        @RequestParam(required = false) final BeerStyleEnum beerStyle,
+        @RequestParam(defaultValue = "false") final Boolean showInventoryOnHand) {
 
         if (pageNumber == null || pageNumber < 0) {
             pageNumber = DEFAULT_PAGE_NUMBER;
@@ -49,7 +51,8 @@ public class BeerController {
             pageSize = DEFAULT_PAGE_SIZE;
         }
 
-        final var beerPagedList = beerService.listBeers(beerName, beerStyle, PageRequest.of(pageNumber, pageSize));
+        final var beerPagedList =
+            beerService.listBeers(beerName, beerStyle, PageRequest.of(pageNumber, pageSize), showInventoryOnHand);
         return new ResponseEntity<>(beerPagedList, HttpStatus.OK);
     }
 

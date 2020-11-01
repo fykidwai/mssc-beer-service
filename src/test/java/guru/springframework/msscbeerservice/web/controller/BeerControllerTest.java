@@ -1,6 +1,7 @@
 package guru.springframework.msscbeerservice.web.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,7 +41,7 @@ class BeerControllerTest {
     @Test
     void testGetBeerById() throws Exception {
         final var id = UUID.randomUUID();
-        given(beerService.getBeerById(any())).willReturn(getValidBeerDto());
+        given(beerService.getBeerById(any(), anyBoolean())).willReturn(getValidBeerDto());
         mockMvc.perform(get(API_V1_BEER + SLASH + id.toString()).accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk());
     }
