@@ -1,6 +1,10 @@
 server:
   port: 9090
-spring:  datasource:    initialization-mode: embedded  cache:    jcache:      config: classpath:ehcache.xml
+spring:  datasource:
+    initialization-mode: embedded
+    url: jdbc:h2:mem:testdb;MODE=MYSQL
+  cache:    jcache:      config: classpath:ehcache.xml  h2:    console:      enabled: true
 sfg: 
   brewery: 
     beer-inventory-service-host: http://localhost:9092
+    
