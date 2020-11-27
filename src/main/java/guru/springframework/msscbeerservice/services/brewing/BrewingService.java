@@ -1,4 +1,4 @@
-package guru.springframework.msscbeerservice.services;
+package guru.springframework.msscbeerservice.services.brewing;
 
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
