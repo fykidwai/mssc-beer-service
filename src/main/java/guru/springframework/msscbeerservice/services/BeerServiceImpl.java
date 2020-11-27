@@ -33,7 +33,7 @@ public class BeerServiceImpl implements BeerService {
     }
 
     @Override
-    @Cacheable(cacheNames = "beerListCache", key = "beerId", condition = "#showInventoryOnHand == false")
+    @Cacheable(cacheNames = "beerListCache", condition = "#showInventoryOnHand == false")
     public BeerDto getBeerById(final UUID beerId, final boolean showInventoryOnHand) {
         if (showInventoryOnHand) {
             return beerMapper
