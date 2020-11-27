@@ -1,5 +1,9 @@
 server:
   port: 9090
+# setting logging level to debug
+logging:
+  level:
+    guru: debug
 spring:
 # defaults for docker image - vromero/activemq-artemis
   artemis:
