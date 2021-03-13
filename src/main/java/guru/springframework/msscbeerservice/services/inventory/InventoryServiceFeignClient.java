@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import guru.springframework.msscbeerservice.services.inventory.model.BeerInventoryDto;
 
-@FeignClient("inventory-service")
+@FeignClient(name = "inventory-service", fallback = InventoryServiceFeignClientFailover.class)
 public interface InventoryServiceFeignClient {
 
     @GetMapping(path = BeerInventoryServiceRestTemplateImpl.INVENTORY_PATH)
