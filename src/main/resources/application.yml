@@ -17,4 +17,4 @@ spring:
   brewery: 
     beer-inventory-service-host: http://localhost:9092
     inventory-user: good
-    inventory-password: beer
+    inventory-password: bear
