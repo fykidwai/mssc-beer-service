@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.fykidwai</groupId>
@@ -8,7 +7,7 @@
         <version>1.13</version>
     </parent>
     <artifactId>mssc-beer-service</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.3</version>
     <name>mssc-beer-service</name>
     <description>MSSC Beer Service</description>
     <url>https://github.com/fykidwai/mssc-beer-service</url>
@@ -16,7 +15,7 @@
         <url>https://github.com/fykidwai/mssc-beer-service</url>
         <connection>scm:git:https://github.com/fykidwai/mssc-beer-service.git</connection>
         <developerConnection>scm:git:https://fykidwai@github.com/fykidwai/mssc-beer-service.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v0.0.3</tag>
     </scm>
     <issueManagement>
         <url>https://github.com/fykidwai/mssc-beer-service/issues</url>
